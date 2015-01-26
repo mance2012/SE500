@@ -13,7 +13,8 @@ public class HtmlCrawlerImpl implements HtmlCrawler {
 	private static final String AMAZON_HOST = "http://www.amazon.com";
 	
 	public Document getDocument(String isbn, String condition) throws MalformedURLException,IOException {
-		String url = String.format("%s/gp/offer-listing/%s/ref=olp_tab_%s?ie=UTF8&condition=%s&sr=8-1", AMAZON_HOST, isbn, condition.toLowerCase(), condition.toLowerCase());
+		String url = String.format("%s/gp/offer-listing/%s/ref=olp_tab_%s?ie=UTF8&condition=%s&sr=8-1", 
+			     AMAZON_HOST, isbn, condition.toLowerCase(), condition.toLowerCase());
 		Connection conn = getConnection(new URL(url));
 		Document document = conn.get();
 		return document;
@@ -32,11 +33,5 @@ public class HtmlCrawlerImpl implements HtmlCrawler {
 		return conn;
 	}
 	
-	public String getText(Document document, String selector) {
-		Elements elements = document.select(selector);
-		if(elements.size() <= 0){
-			return "";
-		}
-		return elements.get(0).text();
-	}
+	
 }

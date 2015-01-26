@@ -17,22 +17,15 @@ import edu.olivet.se530.model.Seller;
 
 class SellerHunter {
 	private HtmlCrawler htmlFetcher;
-	
+	private HtmlParser htmlParser;
 	public void setHtmlCrawler(HtmlCrawler htmlCrawler) {
 		this.htmlFetcher = htmlCrawler;
 	}
 
 	public List<Offer> getOfferList(String isbn, String condition) throws MalformedURLException, IOException {
 		Document doc = htmlFetcher.getDocument(isbn, condition);
-		List<Offer> results = new ArrayList<Offer>();
-		Elements rows = doc.select("div.a-row.a-spacing-mini.olpOffer");
-		for (int i = 0; i < rows.size(); i++) {
-			Offer offer = new Offer();
-			Seller seller = new Seller();
-			seller.setName(htmlFetcher.getText(doc, ""));
-			offer.setSeller(seller);
-			results.add(offer);
-		}
+		List<Offer> results = htmlParser.parserOffer(doc);
+		
 		return results;
 	}
 	

@@ -17,10 +17,6 @@ public class DummyHtmlCrawler implements HtmlCrawler {
 		return Jsoup.parse(new File("D:/JavaClass/SellerHunter.1.14/NIV.html"), "UTF-8");
 	}
 
-	
-	public String getText(Document doc, String string) {
-		// TODO Auto-generated method stub
-		return "Goldie's Goodies";
-	}
+
 
 }

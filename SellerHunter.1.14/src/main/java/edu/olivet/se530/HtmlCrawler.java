@@ -9,6 +9,6 @@ public interface HtmlCrawler {
 
 	public Document getDocument(String isbn, String condition) throws MalformedURLException, IOException;
 
-	String getText(Document document, String selector);
+	//String getText(Document document, String selector);
 
 }
