@@ -9,7 +9,50 @@ public class Condition implements Comparable<Condition> {
 	private int primaryValue;
 	private int secondaryValue;
 	
+	public Condition(){}
+	public Condition(String primary, String secondary) {
+		// TODO Auto-generated constructor stub
+		super();
+		this.primary = primary;
+		this.secondary = secondary;
+	}
 
+	@Override
+	public String toString() {
+		return "Condition [primary=" + primary + ", secondary=" + secondary
+				+ ", primaryValue=" + primaryValue + ", secondaryValue="
+				+ secondaryValue + "]";
+	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((primary == null) ? 0 : primary.hashCode());
+		result = prime * result
+				+ ((secondary == null) ? 0 : secondary.hashCode());
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Condition other = (Condition) obj;
+		if (primary == null) {
+			if (other.primary != null)
+				return false;
+		} else if (!primary.equals(other.primary))
+			return false;
+		if (secondary == null) {
+			if (other.secondary != null)
+				return false;
+		} else if (!secondary.equals(other.secondary))
+			return false;
+		return true;
+	}
 	public String getPrimary() {
 		return primary;
 	}

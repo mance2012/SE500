@@ -19,34 +19,46 @@ public class HtmlParser {
 		for (int i = 0; i < rows.size(); i++) {
 			Offer offer = new Offer();
 			Element row = rows.get(i);
-			
-			Seller seller = new Seller();
-			String SellerNameSellector = "p.a-spacing-samll.olpSellerName";
-			seller.setName(this.getText(row, SellerNameSellector));
-			Elements link = rows.select(SellerNameSellector + "a");
-			if( link.size() > 0) {
-				seller.setUuid(link.get(0).attr("href").replaceFirst(".*&seller=", ""));
-			}
-			
+			Seller seller = ParseSeller(row);
 			
 			offer.setPrice(Float.parseFloat(this.getText(row, "span.olpOfferPrice").replace("$", "")));
 			String shippingFeeText = this.getText(row, "span.olpShippingPrice").replace("$", "");
 			//需要再次进行处理
 			if(shippingFeeText != null && shippingFeeText.trim().length() > 0) {
-				offer.setPrice(Float.parseFloat(shippingFeeText));
+				offer.setShippingPrice(Float.parseFloat(shippingFeeText));
 			}
 
-			String cond = this.getText(row, "h3.a-spacing-small olpCondition");
-			String[] array = cond.split("-");
-			Condition condition = new Condition();
-			condition.setPrimary(array[0].trim());
-			//condition.setSecondary(array[1].trim());
-			
+			Condition condition = ParseCondition(row);
 			offer.setSeller(seller);
 			offer.setCondition(condition);
 			results.add(offer);
 		}
 		return results;
+	}
+
+	public Seller ParseSeller(Element row) {
+		Seller seller = new Seller();
+		String SellerNameSellector = "p.a-spacing-samll.olpSellerName";
+		seller.setName(this.getText(row, SellerNameSellector));
+		Elements link = row.select(SellerNameSellector + "a");
+		if( link != null && link.size() > 0) {
+			seller.setUuid(link.get(0).attr("href").replaceFirst(".*&seller=", ""));
+		}
+		return seller;
+	}
+
+	public Condition ParseCondition(Element row) {
+		String cond = this.getText(row, "h3.a-spacing-small.olpCondition");
+		String[] array = cond.split("-");
+		Condition condition = new Condition();
+		condition.setPrimary(array[0].trim());
+		//如果condition只是new的情况，secondary就需要做判断
+		if (array.length >= 2) {
+			condition.setSecondary(array[1].trim());
+		} else {
+			condition.setSecondary("");
+		}
+		return condition;
 	}
 
 	public String getText(Element element, String selector) {

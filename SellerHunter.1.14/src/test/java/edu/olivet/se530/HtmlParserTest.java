@@ -10,6 +10,7 @@ import org.junit.Test;
 
 import edu.olivet.se530.HtmlParser;
 import edu.olivet.se530.dummy.DummyHtmlCrawler;
+import edu.olivet.se530.model.Condition;
 import edu.olivet.se530.model.Offer;
 
 
@@ -22,12 +23,16 @@ public class HtmlParserTest {
 	}
 	
 	@Test
+	public void test_parse_condition() {
+		Condition cond = htmlParser.ParseCondition(document.select("div.a-row.a-spacing-mini.olpOffer").get(1));
+		Assert.assertEquals(new Condition("New", ""), cond);
+	}
+	
+	@Test
 	public void testParseOffer() {
 		List<Offer> offers = htmlParser.parserOffer(document);
 		Assert.assertTrue(6.99f == offers.get(0).getPrice());
-		Assert.assertEquals("", offers.get(1).getCondition().getPrimary());
-		//Assert.assertEquals("", offers.get(1).getCondition().getSecondary());
-		
+		Assert.assertTrue(3.99f == offers.get(1).getShippingPrice());
 	}
 	
 	@Test
