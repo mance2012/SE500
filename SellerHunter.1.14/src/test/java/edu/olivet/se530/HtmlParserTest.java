@@ -24,13 +24,13 @@ public class HtmlParserTest {
 	
 	@Test
 	public void test_parse_condition() {
-		Condition cond = htmlParser.ParseCondition(document.select("div.a-row.a-spacing-mini.olpOffer").get(1));
+		Condition cond = htmlParser.parseCondition(document.select("div.a-row.a-spacing-mini.olpOffer").get(1));
 		Assert.assertEquals(new Condition("New", ""), cond);
 	}
 	
 	@Test
 	public void testParseOffer() {
-		List<Offer> offers = htmlParser.parserOffer(document);
+		List<Offer> offers = htmlParser.parseOffer(document);
 		Assert.assertTrue(6.99f == offers.get(0).getPrice());
 		Assert.assertTrue(3.99f == offers.get(1).getShippingPrice());
 	}

@@ -47,9 +47,19 @@ public class Offer implements Comparable<Offer>{
 	public void setCondition(Condition condition) {
 		this.condition = condition;
 	}
+	//@Override
 	public int compareTo(Offer o) {
-		// TODO Auto-generated method stub
-		return 0;
+		int rc = Float.compare(this.price, o.price);
+		if (rc == 0) {
+			rc = Float.compare(this.shippingPrice, o.shippingPrice);
+			if (rc == 0) {
+				rc = -Integer.compare(this.getSeller().getRating(), o.getSeller().getRating());
+				if (rc == 0) {
+					return -Integer.compare(this.getSeller().getRatingCount(), o.getSeller().getRatingCount());
+				}
+			}
+		}
+		return rc;
 	}
 	
 	

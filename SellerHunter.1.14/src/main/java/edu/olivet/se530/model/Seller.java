@@ -1,5 +1,10 @@
 package edu.olivet.se530.model;
 
+
+/**
+ * 亚马逊商家
+ * <a href="mailto:nathanaelibport@gmail.com">Nathanael Yang</a> Jan 14, 2015 10:03:14 AM
+ */
 public class Seller {
 	
 	private String name;
@@ -8,7 +13,7 @@ public class Seller {
 	private String shippingCountry;
 	private int rating;
 	private int ratingCount;
-	private boolean expeditedAvailable;
+	private boolean expeditedShippingAvailable;
 	private boolean intlShippingAvailable;
 	
 	public String getName() {
@@ -47,11 +52,11 @@ public class Seller {
 	public void setRatingCount(int ratingCount) {
 		this.ratingCount = ratingCount;
 	}
-	public boolean isExpeditedAvailable() {
-		return expeditedAvailable;
+	public boolean isExpeditedShippingAvailable() {
+		return expeditedShippingAvailable;
 	}
-	public void setExpeditedAvailable(boolean expeditedAvailable) {
-		this.expeditedAvailable = expeditedAvailable;
+	public void setExpeditedShippingAvailable(boolean expeditedShippingAvailable) {
+		this.expeditedShippingAvailable = expeditedShippingAvailable;
 	}
 	public boolean isIntlShippingAvailable() {
 		return intlShippingAvailable;
@@ -59,6 +64,4 @@ public class Seller {
 	public void setIntlShippingAvailable(boolean intlShippingAvailable) {
 		this.intlShippingAvailable = intlShippingAvailable;
 	}
-	
-	
 }
