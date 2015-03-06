@@ -18,6 +18,7 @@ import edu.olivet.se530.model.Product;
 public class SellerHunter {
 	@Inject private HtmlCrawler htmlFetcher;
 	@Inject private HtmlParser htmlParser;
+	private List<Offer> Offers;
 	
 	/**
 	 * 根据给定的isbn和condition，返回亚马逊网站上面的Offer列表
@@ -42,6 +43,7 @@ public class SellerHunter {
 		}
 		
 		Collections.sort(offers);
+		setOffers(offers);
 		return offers.get(0);
 		
 	}
@@ -51,11 +53,11 @@ public class SellerHunter {
 	 * @param offer
 	 */
 	public boolean evaluteRating(Offer offer) {
-		return offer.getSeller().getRating() >= 95;
+		return offer.getSeller().getRating() > 95;
 	}
 
 	public boolean evaluteRatingCount(Offer offer) {
-		return offer.getSeller().getRatingCount() >= 100;
+		return offer.getSeller().getRatingCount() > 100;
 	}
 	
 	
@@ -69,5 +71,13 @@ public class SellerHunter {
 
 	public void setHtmlParser(HtmlParser htmlParser) {
 		this.htmlParser = htmlParser;
+	}
+
+	public List<Offer> getOffers() {
+		return Offers;
+	}
+
+	public void setOffers(List<Offer> offers) {
+		Offers = offers;
 	}
 }

@@ -16,6 +16,7 @@ public class Offer implements Comparable<Offer>{
 	private float price;
 	private float shippingPrice;
 	private Condition condition;
+	private boolean isPrime;
 	
 	public Seller getSeller() {
 		return seller;
@@ -41,22 +42,29 @@ public class Offer implements Comparable<Offer>{
 	public void setShippingPrice(float shippingPrice) {
 		this.shippingPrice = shippingPrice;
 	}
+	public float getFilteredShippingPrice() {
+		if(isPrime) return 0;
+		return shippingPrice;
+	}
 	public Condition getCondition() {
 		return condition;
 	}
 	public void setCondition(Condition condition) {
 		this.condition = condition;
 	}
+	public boolean getIsprime() {
+		return isPrime;
+	}
+	public void setIsprime(boolean isPrime) {
+		this.isPrime = isPrime;
+	}
 	//@Override
 	public int compareTo(Offer o) {
-		int rc = Float.compare(this.price, o.price);
+		int rc = Float.compare(this.price + this.getFilteredShippingPrice(), o.price + o.getFilteredShippingPrice());
 		if (rc == 0) {
-			rc = Float.compare(this.shippingPrice, o.shippingPrice);
+			rc = -Integer.compare(this.getSeller().getRating(), o.getSeller().getRating());
 			if (rc == 0) {
-				rc = -Integer.compare(this.getSeller().getRating(), o.getSeller().getRating());
-				if (rc == 0) {
-					return -Integer.compare(this.getSeller().getRatingCount(), o.getSeller().getRatingCount());
-				}
+				return -Integer.compare(this.getSeller().getRatingCount(), o.getSeller().getRatingCount());
 			}
 		}
 		return rc;

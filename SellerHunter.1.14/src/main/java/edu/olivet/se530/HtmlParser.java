@@ -6,6 +6,7 @@ import java.util.List;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.junit.Assert;
 
 import edu.olivet.se530.annotations.Profile;
 import edu.olivet.se530.model.Condition;
@@ -20,12 +21,15 @@ public class HtmlParser {
 		Elements rows = doc.select("div.a-row.a-spacing-mini.olpOffer");
 		for (int i = 0; i < rows.size(); i++) {
 			Element row = rows.get(i);
-			
+
 			Offer offer = new Offer();
 			offer.setPrice(Float.parseFloat(this.getText(row, "span.olpOfferPrice").replace("$", "")));
 			String shippingFeeText = this.getText(row, "span.olpShippingPrice").replace("$", "");
 			if (shippingFeeText != null && shippingFeeText.trim().length() > 0) {
 				offer.setShippingPrice(Float.parseFloat(shippingFeeText));
+			}
+			if(this.hasClass(row, "span.supersaver")) {
+				offer.setIsprime(true);
 			}
 			
 			Seller seller = this.parseSeller(row);
@@ -95,6 +99,14 @@ public class HtmlParser {
 			return "";
 		}
 		return elements.get(0).text();
+	}
+	
+	public boolean hasClass(Element element, String selector) {
+		Elements elements = element.select(selector);
+		if (elements.size() <= 0) {
+			return false;
+		}
+		return true;
 	}
 	
 }

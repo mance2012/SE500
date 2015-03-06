@@ -13,7 +13,7 @@ public class DummyHtmlCrawler implements HtmlCrawler {
 
 	public Document getDocument(String isbn, String condition)
 			throws MalformedURLException, IOException {
-		return Jsoup.parse(new File("D:/MyJavaProject/SE530/SellerHunter.1.14/Assignment/0751515736_USED_1.html"), "UTF-8");
+		return Jsoup.parse(new File("D:/MyJavaProject/SE530/SellerHunter.1.14/Assignment/0751515736_USED_2.html"), "UTF-8");
 	}
 
 }
