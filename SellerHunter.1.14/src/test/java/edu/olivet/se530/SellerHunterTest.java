@@ -16,41 +16,42 @@ import org.junit.runner.RunWith;
 
 import com.google.inject.Inject;
 
-import edu.olivet.se530.dummy.DummyModule;
+import edu.olivet.se530.dummy.DummyHtmlCrawler;
 import edu.olivet.se530.model.Offer;
  
 @RunWith(JukitoRunner.class)
-@UseModules(value = DummyModule.class)
 public class SellerHunterTest {
-	@Inject private SellerHunter hunter;
-	private String isbn = "0813343585";
-	private String condition = "NEW";
+	private SellerHunter hunter = new SellerHunter();
+	private String isbn = "1416544631";
+	private String condition = "Used";
+	private Offer offer;
+	
+	public SellerHunterTest() throws MalformedURLException, IOException {
+		offer = hunter.huntOffer(isbn, condition);
+		//hunter.setHtmlFetcher(new DummyHtmlCrawler());
+	}
 	
 	@Test public void test_get_offer_list() throws MalformedURLException, IOException {
-		Offer offer = hunter.huntOffer(isbn, condition);
 		System.out.print(offer.getSeller().getName());
 		Assert.assertEquals("aHALL078", offer.getSeller().getName());
 	}
 	
 	
 	@Test public void test_get_offer_rating() throws MalformedURLException, IOException {
-		Offer offer = hunter.huntOffer(isbn, condition);
 		Assert.assertTrue(offer.getSeller().getRating() > 95);
 	}	
 	
 	@Test public void test_get_offer_rating_count() throws MalformedURLException, IOException {
-		Offer offer = hunter.huntOffer(isbn, condition);
 		Assert.assertTrue(offer.getSeller().getRatingCount() > 100);
 	}	
 	
 
 	@Test public void test_get_offer_shipping() throws MalformedURLException, IOException {
-		Offer offer = hunter.huntOffer(isbn, condition);
 		Assert.assertTrue(offer.getSeller().getShippingCountry() != "United Kingdom");
 	}
 	
 	@Test public void test_get_offer_orderby_price() throws MalformedURLException, IOException {
-		Offer offer_old = hunter.huntOffer(isbn, condition);
+		Offer offer_old = offer;
 		boolean ordered = true;
 		
 		for (Iterator<Offer> iterator = hunter.getOffers().iterator(); iterator.hasNext();) {

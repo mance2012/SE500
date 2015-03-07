@@ -16,8 +16,8 @@ import edu.olivet.se530.model.Product;
 
 @Singleton
 public class SellerHunter {
-	@Inject private HtmlCrawler htmlFetcher;
-	@Inject private HtmlParser htmlParser;
+	private HtmlCrawlerImpl htmlFetcher = new HtmlCrawlerImpl();
+	private HtmlParser htmlParser = new HtmlParser();
 	private List<Offer> Offers;
 	
 	/**
@@ -44,7 +44,7 @@ public class SellerHunter {
 		
 		Collections.sort(offers);
 		setOffers(offers);
-		return offers.get(0);
+		return offers.get(1);
 		
 	}
 
@@ -66,7 +66,7 @@ public class SellerHunter {
 	}
 
 	public void setHtmlFetcher(HtmlCrawler htmlFetcher) {
-		this.htmlFetcher = htmlFetcher;
+		this.htmlFetcher = (HtmlCrawlerImpl) htmlFetcher;
 	}
 
 	public void setHtmlParser(HtmlParser htmlParser) {

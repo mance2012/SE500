@@ -11,7 +11,7 @@ import edu.olivet.se530.model.Offer;
  * Seller猎手
  */
 public class SellerHunterEntry {
-
+	
 	public static void main(String[] args) throws MalformedURLException, IOException {
 		SellerHunter hunter = new SellerHunter();
 		Offer offer = hunter.huntOffer("0751515736", "Used");
