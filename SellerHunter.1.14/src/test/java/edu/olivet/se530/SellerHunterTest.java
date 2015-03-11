@@ -23,13 +23,29 @@ import edu.olivet.se530.model.Offer;
 @UseModules(value = DummyModule.class)
 public class SellerHunterTest {
 	@Inject private SellerHunter hunter;
-	private String isbn = "0813343585";
-	private String condition = "NEW";
+	private String isbn = "0907871496";
+	private String condition = "New";
 	
 	@Test public void test_get_offer_list() throws MalformedURLException, IOException {
 		Offer offer = hunter.huntOffer(isbn, condition);
-		System.out.print(offer.getSeller().getName());
-		Assert.assertEquals("aHALL078", offer.getSeller().getName());
+		Assert.assertEquals("the_book_depository_", offer.getSeller().getName());
+	}
+	
+	@Test public void test_get_offer_list2() throws MalformedURLException, IOException {
+		Offer offer = hunter.huntOffer("751515736", "Used");
+		Assert.assertEquals("Free State Books", offer.getSeller().getName());
+	}
+	
+	@Test public void test_get_offer_list3() throws MalformedURLException, IOException {
+		//1416532277	New			BookSeller USA, LLC
+		Offer offer = hunter.huntOffer("1416532277", "New");
+		Assert.assertEquals("BookSeller USA, LLC", offer.getSeller().getName());
+	}
+	
+	@Test public void test_get_offer_list4() throws MalformedURLException, IOException {
+		//135157862	New			AP
+		Offer offer = hunter.huntOffer("135157862", "New");
+		Assert.assertEquals("AP", offer.getSeller().getName());
 	}
 	
 	
@@ -44,41 +60,21 @@ public class SellerHunterTest {
 	}	
 	
 
-	@Test public void test_get_offer_shipping() throws MalformedURLException, IOException {
-		Offer offer = hunter.huntOffer(isbn, condition);
-		Assert.assertTrue(offer.getSeller().getShippingCountry() != "United Kingdom");
-	}
-	
 	@Test public void test_get_offer_orderby_price() throws MalformedURLException, IOException {
-		Offer offer_old = hunter.huntOffer(isbn, condition);
+		Offer offer_old = hunter.huntOffer("135157862", "New");
 		boolean ordered = true;
 		
 		for (Iterator<Offer> iterator = hunter.getOffers().iterator(); iterator.hasNext();) {
 			Offer offer_new = iterator.next();
+
 			if(offer_new.getPrice() + offer_new.getFilteredShippingPrice() - offer_old.getPrice() - offer_old.getFilteredShippingPrice() < 0) {
 				ordered = false;
 			}
 			offer_old = offer_new;
 		}
 		Assert.assertTrue(ordered);
-		//Assert.assertTrue(offer.getPrice()+offer.getShippingPrice() == 4.76f);
 	}
 	
-//	@Test public void test_get_offer_orderby_rating() throws MalformedURLException, IOException {
-//		Offer offer_old = hunter.huntOffer(isbn, condition);
-//		boolean ordered = true;
-//		
-//		for (Iterator<Offer> iterator = hunter.getOffers().iterator(); iterator.hasNext();) {
-//			Offer offer_new = iterator.next();
-//			System.out.println(offer_old.getSeller().getRating());
-//			if(offer_new.getSeller().getRating() - offer_old.getSeller().getRating() > 0) {
-//				ordered = false;
-//			}
-//			offer_old = offer_new;
-//		}
-//		Assert.assertTrue(ordered);
-//		//Assert.assertTrue(offer.getPrice()+offer.getShippingPrice() == 4.76f);
-//	}
 	
 	
 

@@ -43,8 +43,8 @@ public class Offer implements Comparable<Offer>{
 		this.shippingPrice = shippingPrice;
 	}
 	public float getFilteredShippingPrice() {
-		if(isPrime) return 0;
-		return shippingPrice;
+		if(isPrime && price >= 35.0f) return 0;
+		return shippingPrice <= 0.0f ? 3.99f : shippingPrice;
 	}
 	public Condition getCondition() {
 		return condition;

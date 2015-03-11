@@ -3,6 +3,7 @@ package edu.olivet.se530;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -68,13 +69,19 @@ public class HtmlParser {
 			seller.setUuid(link.get(0).attr("href").replaceFirst(".*&seller=", ""));
 		}
 		
-		String ratingText = this.getText(row, "p.a-spacing-small > a > b");
-		int rating = Integer.parseInt(ratingText.replaceAll("[^0-9]", ""));
-		seller.setRating(rating);
-		
-		String ratingCountText = this.getText(row, "div.a-column.a-span2.olpSellerColumn > p:nth-child(2)");
-		ratingCountText = ratingCountText.substring(ratingCountText.indexOf('('), ratingCountText.indexOf(')')).replaceAll("[^0-9]", "");
-		seller.setRatingCount(Integer.parseInt(ratingCountText));
+		if (StringUtils.isBlank(seller.getName()) && link.size() == 0) {
+			seller.setName("AP");
+			seller.setRating(100);
+			seller.setRatingCount(9999999);
+		} else {
+			String ratingText = this.getText(row, "p.a-spacing-small > a > b");
+			int rating = Integer.parseInt(ratingText.replaceAll("[^0-9]", ""));
+			seller.setRating(rating);
+			
+			String ratingCountText = this.getText(row, "div.a-column.a-span2.olpSellerColumn > p:nth-child(2)");
+			ratingCountText = ratingCountText.substring(ratingCountText.indexOf('('), ratingCountText.indexOf(')')).replaceAll("[^0-9]", "");
+			seller.setRatingCount(Integer.parseInt(ratingCountText));
+		}
 		
 		Elements deliveries = row.select("ul.a-vertical > li > span.a-list-item");
 		for (int j = 0; j < deliveries.size(); j++) {
