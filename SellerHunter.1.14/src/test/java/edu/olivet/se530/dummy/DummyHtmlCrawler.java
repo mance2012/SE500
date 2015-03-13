@@ -10,6 +10,9 @@ import org.jsoup.nodes.Document;
 
 import edu.olivet.se530.HtmlCrawler;
 
+/**
+ * 动态调用本地的amazon静态文件
+ * **/
 public class DummyHtmlCrawler implements HtmlCrawler {
 
 	public Document getDocument(String isbn, String condition)

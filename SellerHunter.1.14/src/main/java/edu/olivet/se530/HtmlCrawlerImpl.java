@@ -7,7 +7,6 @@ import java.net.URL;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.select.Elements;
 
 public class HtmlCrawlerImpl implements HtmlCrawler {
 	private static final String AMAZON_HOST = "http://www.amazon.com";

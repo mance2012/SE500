@@ -7,7 +7,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.junit.Assert;
 
 import edu.olivet.se530.annotations.Profile;
 import edu.olivet.se530.model.Condition;
@@ -68,7 +67,7 @@ public class HtmlParser {
 		if( link != null && link.size() > 0) {
 			seller.setUuid(link.get(0).attr("href").replaceFirst(".*&seller=", ""));
 		}
-		
+		//判断商家是Amazon的情况 即sellerName为空 设置sellerName为AP
 		if (StringUtils.isBlank(seller.getName()) && link.size() == 0) {
 			seller.setName("AP");
 			seller.setRating(100);

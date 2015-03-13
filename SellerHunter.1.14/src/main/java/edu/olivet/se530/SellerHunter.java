@@ -37,9 +37,9 @@ public class SellerHunter {
 			if (!this.evaluteRatingCount(offer)) {
 				iterator.remove();
 			}
-			if(this.evaluteShippingcountry(offer)) {
-				iterator.remove();
-			}
+//			if(this.evaluteShippingcountry(offer)) {
+//				iterator.remove();
+//			}
 		}
 		
 		Collections.sort(offers);
@@ -49,7 +49,7 @@ public class SellerHunter {
 	}
 
 	/**
-	 * 对一个Offer按照价格、运费、Rating等等标准进行审查
+	 * 对一个Offer按照价格、运费、Rating和发货地等等标准进行审查
 	 * @param offer
 	 */
 	public boolean evaluteRating(Offer offer) {
@@ -60,9 +60,8 @@ public class SellerHunter {
 		return offer.getSeller().getRatingCount() > 100;
 	}
 	
-	
 	public boolean evaluteShippingcountry(Offer offer) {
-		return offer.getSeller().getShippingCountry() == "United Kingdom";
+		return offer.getSeller().getShippingCountry().equalsIgnoreCase("United Kingdom");
 	}
 
 	public void setHtmlFetcher(HtmlCrawler htmlFetcher) {

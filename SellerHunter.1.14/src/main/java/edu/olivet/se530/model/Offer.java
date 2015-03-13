@@ -42,6 +42,7 @@ public class Offer implements Comparable<Offer>{
 	public void setShippingPrice(float shippingPrice) {
 		this.shippingPrice = shippingPrice;
 	}
+	//判断prime用户 35元以上免运费 否则运费为$3.99
 	public float getFilteredShippingPrice() {
 		if(isPrime && price >= 35.0f) return 0;
 		return shippingPrice <= 0.0f ? 3.99f : shippingPrice;
@@ -59,6 +60,7 @@ public class Offer implements Comparable<Offer>{
 		this.isPrime = isPrime;
 	}
 	//@Override
+	//比较商品价格和运费的总和、Rating和ratingCount
 	public int compareTo(Offer o) {
 		int rc = Float.compare(this.price + this.getFilteredShippingPrice(), o.price + o.getFilteredShippingPrice());
 		if (rc == 0) {
